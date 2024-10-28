@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "首頁";
+}
+
+<style>
+    .meal-item {
+        margin-bottom: 20px;
+        padding: 10px; 
+        border: 1px solid #ddd;
+    }
+</style>
+
+<div class="meal-container">
+    @foreach (var meal in Model)
+    {
+        <div class="meal-item">
+            <div>Product: @meal.ProductName</div>
+            <div>Price: @meal.Price</div>
+            <button class="btn btn-primary" onclick="AddShoppingCart(@meal.Id)">加入購物車</button>
+        </div>
+    }
+
+    <button class="btn btn-primary" onclick="AddMeals()">新增餐點</button>
+</div>
+
+<script>
+    function AddShoppingCart(Id) { 
+        $.ajax({
+            url: "@Url.Action("AddToShoppingCart", "Home")",
+            type: 'POST',
+            data: { mealId: Id },
+            success: function (data) {
+                alert("加入成功");
+            }
+        });
+    }
+
+    function AddMeals() {
+        var MealsList = {}
+        $.ajax({
+            url: "@Url.Action("AddMeals", "Home")",
+            type: 'POST',
+            data: MealsList,
+            success: function (data) {
+                alert("加入成功");
+            }
+        });
+    }
+</script>

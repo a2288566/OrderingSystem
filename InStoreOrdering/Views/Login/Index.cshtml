@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "會員登入";
+}
+
+<div style="margin-left:10px;" action="Login/Home" method="post">
+    <div class="form-group">
+        <label for="indexAccount">帳號</label>
+        <input type="text" class="form-control" id="indexAccount" name="indexAccount" placeholder="輸入帳號" style="width: 20%;">
+    </div>
+    <div class="form-group">
+        <label for="indexPassword">密碼</label>
+        <input type="text" class="form-control" id="indexPassword" name="indexPassword" placeholder="輸入密碼" style="width: 20%;">
+    </div><br/>
+    <button type="button" class="btn btn-primary" onclick="Login()">登入 </button>
+    <button type="button" class="btn btn-primary" id="CreateUser" onclick="SignUp()">註冊 </button>
+</div>
+
+<script>
+    function SignUp() { 
+        window.location.href = '/Login/SignUp';
+    }
+
+    function Login() {
+        var account = $('#indexAccount').val();
+        var password = $('#indexPassword').val();
+        var postData = {
+            account: account,
+            password: password
+        };
+
+        $.ajax({
+            url: '/Login/Login',
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify(postData),
+            success: function (data, textStatus, jqXHR) {
+                var statusCode = jqXHR.status;
+                if (statusCode === 200) {
+                    //先導向首頁 但想導向前一頁
+                    window.location.href = '/Home/Index';
+                }
+            },
+            error: function (response) { 
+            
+            }
+        });
+    }
+</script>

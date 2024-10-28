@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "註冊會員";
+}
+
+<div style="margin-left:10px;" action="Login/Home" method="post">
+    <div class="form-group">
+        <label for="indexAccount">帳號</label>
+        <input type="text" class="form-control" id="indexAccount" name="indexAccount" placeholder="輸入帳號" style="width: 20%;">
+    </div>
+    <div class="form-group">
+        <label for="indexPassword">密碼</label>
+        <input type="text" class="form-control" id="indexPassword" name="indexPassword" placeholder="輸入密碼" style="width: 20%;">
+    </div>
+    <div class="form-group">
+        <label for="indexCheckPassword">確認密碼</label>
+        <input type="text" class="form-control" id="indexCheckPassword" name="indexCheckPassword" style="width: 20%;">
+    </div>
+    <div class="form-group">
+        <label for="indexName">名字</label>
+        <input type="text" class="form-control" id="indexName" name="indexName" style="width: 20%;">
+    </div>
+    <div class="form-group">
+        <label for="indexEmail">E-mail</label>
+        <input type="text" class="form-control" id="indexEmail" name="indexEmail" style="width: 20%;">
+    </div>
+    <div class="form-group">
+        <label for="indexPhone">手機號碼</label>
+        <input type="text" class="form-control" id="indexPhone" name="indexPhone" style="width: 20%;">
+    </div>
+    <div class="form-group">
+        <label for="indexBirthday">生日</label>
+        <input type="date" class="form-control" id="indexBirthday" name="indexBirthday" style="width: 20%;">
+    </div><br />
+
+    <button type="button" class="btn btn-primary" onclick="SignUp()">送出 </button>
+</div>
+<script>
+    function SignUp() {
+
+        var signUpInfo = {
+            Account: $("#indexAccount").val(),
+            Password: $("#indexPassword").val(),
+            indexCheckPassword: $("indexCheckPassword").val(),
+            Name: $("#indexName").val(),
+            Email: $("#indexEmail").val(),
+            Phone: $("#indexPhone").val(),
+            Birthday: $("#indexBirthday").val()
+        };
+
+        $.ajax({
+            url: '/Login/SignUpInfo',
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify(signUpInfo),
+            success: function (data, textStatus, jqXHR) {
+                var statusCode = jqXHR.status;
+                if (statusCode === 200) {
+                    alert('加入成功');
+                }
+            },
+            error: function (response) {
+
+            }
+        });
+    }
+</script>
